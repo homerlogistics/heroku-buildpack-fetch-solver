@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -f $1/script/fetch_solver ]; then
+    echo "Found the script for fetching the solver"
+    exit 0
+else
+    exit 1
+fi
+
