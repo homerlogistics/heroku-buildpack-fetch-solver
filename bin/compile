@@ -5,6 +5,14 @@ indent() {
   sed -u 's/^/       /'
 }
 
-echo "-----> Found a script file"
-bundle exec rails runner script/fetch_solver
-
+ENV_DIR=$3
+for KEY in AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY; do
+  [ -f $ENV_DIR/$KEY ] && export "$KEY=$(cat $ENV_DIR/$KEY)"
+  [ -z "${!KEY}" ] && echo "You didn't set $KEY, and this is required." && exit 1
+done
+echo "HOORAY, you set the variables! AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID; AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY."
+echo $( ls ~/ )
+echo $( pwd )
+echo $( ls ../../. )
+echo $( pwd )
+~/app/script/fetch_solver $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
